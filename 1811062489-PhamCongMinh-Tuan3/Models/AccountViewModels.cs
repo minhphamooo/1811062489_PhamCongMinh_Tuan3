@@ -64,6 +64,12 @@ namespace _1811062489_PhamCongMinh_Tuan3.Models
 
     public class RegisterViewModel
     {
+
+        [Required]
+        [StringLength(255)]
+        [Display(Name = "Tên Người Dùng")]
+        public string Name { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

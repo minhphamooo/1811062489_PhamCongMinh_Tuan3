@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _1811062489_PhamCongMinh_Tuan3.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,25 +7,37 @@ using System.Web.Mvc;
 
 namespace _1811062489_PhamCongMinh_Tuan3.Controllers
 {
-    public class HomeController : Controller
-    {
-        public ActionResult Index()
+   
+        public class HomeController : Controller
         {
-            return View();
-        }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+            private ApplicationDbContext _dbContext;
 
-            return View();
-        }
+            public HomeController()
+            {
+                _dbContext = new ApplicationDbContext();
+            }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+            public ActionResult Index()
+            {
 
-            return View();
+                var upcommingCourses = _dbContext.Courses.Include("Lecturer").Include("Category").Where(c => c.DateTime > DateTime.Now).OrderBy(m => m.DateTime);
+
+                return View(upcommingCourses);
+            }
+
+            public ActionResult About()
+            {
+                ViewBag.Message = "Your application description page.";
+
+                return View();
+            }
+
+            public ActionResult Contact()
+            {
+                ViewBag.Message = "Your contact page.";
+
+                return View();
+            }
         }
     }
-}
