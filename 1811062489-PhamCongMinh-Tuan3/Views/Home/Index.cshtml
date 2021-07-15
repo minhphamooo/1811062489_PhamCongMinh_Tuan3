@@ -1,39 +1,47 @@
-﻿@model IEnumerable<_1811062489_PhamCongMinh_Tuan3.Models.Course>
+﻿@model _1811062489_PhamCongMinh_Tuan3.ViewModels.CoursesViewModel
 @{
     ViewBag.Title = "Home Page";
 }
-<link href="~/Content/Style.css" rel="stylesheet" />
-<div class="course" style="list-style: none; position: relative; margin-bottom: 30px; ">
-    <ul>
-        @foreach(var course in Model)
-            {
-                <li>
-                   <div class="date" style=" text-align: center; background-color: #d41d50; color: white; width: 60px; border-radius: 8px;">
-                       <div class="month">
-                           @course.DateTime.ToString("MM")
-                       </div>
-                       <div class="day">
-                           @course.DateTime.ToString("dd")
-                       </div>
-                   </div>
-                    <div class="details">
-                        <span class="lecturer">
-                            @course.Lecturer.Name
-                        </span>
-                        <span class="category">
-                            @course.Category.Name
-                        </span>
-                        <button data-coures-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going ?</button>
+<h2>Trang chủ</h2>
+<div class="row">
+    <ul class="course"style="list-style: none; position: relative; margin-bottom: 30px; ">
+        @foreach (var course in Model.UpcommingCourses)
+        {
+            <li>
+                <div class="date"style=" text-align: center; background-color: #d41d50; color: white; width: 60px; border-radius: 8px;">
+                    <div class="month">
+                        @course.DateTime.ToString("MM")
                     </div>
-                </li>
-            }
+                    <div class="day">
+                        @course.DateTime.ToString("dd")
+                    </div>
+                </div>
+                <div class="details">
+                    <span class="lecturer">
+                        @course.Lecturer.Name
+                        @if (Model.ShowAction)
+                        {
+                            <button class="btn btn-default btn-sm js-toggle-follow" data-user-id="@course.LecturerId">Follow</button>
+                        }
+                    </span>
+
+                    <span class="category">
+                        @course.Category.Name
+                    </span>
+                    @if (Model.ShowAction)
+    
+                    {
+                        <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
+                    }
+                </div>
+            </li>
+        }
     </ul>
-    @section scripts
-    {
+    @section scripts{
         <script>
             $(document).ready(function () {
                 $(".js-toggle-attendance").click(function (e) {
-                    var button = $(e.targer);
+                    var button = $(e.target);
                     $.post("/api/attendances", { courseId: button.attr("data-course-id") })
                         .done(function () {
                             button
@@ -42,10 +50,25 @@
                                 .text("Going");
                         })
                         .fail(function () {
-                            alert("Something failed!");
+                            alert("Something failed");
                         });
                 });
+                $(".js-toggle-follow").click(function (e) {
+                    var button = $(e.target);
+                    $.post("/api/followings", { followeeId: button.attr("data-user-id") })
+                        .done(function () {
+                            button.text("Following");
+                        })
+                        .fail(function () {
+                            alert("Something failed");
+                        });
+                });
+
             });
         </script>
-        }
+    }
 </div>
+
+
+
+
