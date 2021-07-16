@@ -9,7 +9,7 @@ using System.Data.Entity;
 
 namespace _1811062489_PhamCongMinh_Tuan3.Controllers
 {
-   
+   //minh
         public class HomeController : Controller
         {
 

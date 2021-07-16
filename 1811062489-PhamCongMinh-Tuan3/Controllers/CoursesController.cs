@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 
 namespace _1811062489_PhamCongMinh_Tuan3.Controllers
 {
+    //minh
     public class CoursesController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
