@@ -12,6 +12,7 @@ using _1811062489_PhamCongMinh_Tuan3.Models;
 
 namespace _1811062489_PhamCongMinh_Tuan3.Controllers
 {
+    //minh
     [Authorize]
     public class AccountController : Controller
     {
